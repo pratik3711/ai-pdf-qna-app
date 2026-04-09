@@ -1,0 +1,31 @@
+name: ETL Pipeline
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  etl:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run PDF extraction
+        run: npm run extract
+
+      - name: Run chunking
+        run: npm run chunk
+
+      - name: Run tests
+        run: npm test
