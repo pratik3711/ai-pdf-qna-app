@@ -1,235 +1,144 @@
-# 📄 AI PDF QnA App with ETL Pipeline
+📄 AI PDF QnA App (End-to-End AI Application)
 
-An AI-powered application that allows users to ask questions about PDF documents.
-The system extracts, processes, and retrieves relevant information using an ETL pipeline and serves answers via a Next.js app.
+An AI-powered application that allows users to ask questions about PDF documents using a complete end-to-end data pipeline (ingestion → ETL → storage → retrieval → LLM → UI).
 
----
+🌐 Live Demo
 
-## 🚀 Features
+👉 https://ai-pdf-qna-app.vercel.app
 
-* 📥 PDF ingestion and parsing
-* 🔄 ETL pipeline (Extract → Transform → Load)
-* 🔍 Retrieval-based question answering
-* ⚡ Fast search over processed chunks
-* 🧪 Unit testing with Vitest
-* 🌐 End-to-End testing with Playwright
-* ⚙️ CI/CD using GitHub Actions
+📦 GitHub Repository
 
----
+👉 https://github.com/pratik3711/ai-pdf-qna-app
 
-## 🏗️ Project Structure
+🎯 Project Scope
+✅ Supported Use Case
+Ask questions about pre-ingested PDF documents
+Retrieve relevant information from processed content
+Generate AI-powered answers using retrieved context
+❌ Out of Scope
+Uploading PDFs at runtime
+Real-time document indexing
+Large-scale vector databases
+Multi-user or production-scale features
 
-```
-ai-pdf-qna-app/
-│
-├── app/                  # Next.js frontend & API routes
-├── data/
-│   ├── raw/              # Original PDF files
-│   ├── processed/        # Extracted JSON data
-│   └── final/            # Final knowledge base
-├── lib/                  # Core logic (retrieval, loading, answering)
-├── scripts/              # ETL scripts (extract + chunk)
-├── tests/
-│   ├── unit/             # Unit tests (Vitest)
-│   └── e2e/              # E2E tests (Playwright)
-├── .github/workflows/    # CI pipeline
-├── package.json
-└── README.md
-```
+This is a focused proof-of-concept, as required by the assignment.
 
----
+🏗️ System Architecture (End-to-End Flow)
+PDF Files → ETL Pipeline → Structured Data → Retrieval → LLM → UI
+Breakdown:
+Ingestion
+PDFs stored in /data/raw
+ETL (GitHub Actions + Scripts)
+Extract text (extract)
+Chunk text (chunk)
+Output structured knowledge base
+Storage
+/data/processed → intermediate JSON
+/data/final/knowledge.json → final dataset
+Retrieval Layer
+Finds relevant chunks based on user query
+LLM Layer
+Uses OpenAI API to generate answers from context
+UI Layer
+Next.js app deployed on Vercel
+⚙️ ETL Pipeline
 
-## ⚙️ ETL Pipeline
+Runs locally or via GitHub Actions:
 
-The ETL (Extract, Transform, Load) pipeline processes PDFs into searchable data.
-
-### Steps:
-
-1. **Extract**
-
-   * Reads PDF files from `/data/raw`
-   * Converts them into structured JSON
-
-   ```bash
-   npm run extract
-   ```
-
-2. **Transform (Chunking)**
-
-   * Splits text into smaller chunks for efficient retrieval
-
-   ```bash
-   npm run chunk
-   ```
-
-3. **Load**
-
-   * Stores processed data in `/data/final/knowledge.json`
-
----
-
-## 🧠 How QnA Works
-
-1. User enters a question
-2. System searches relevant chunks
-3. Matching content is retrieved
-4. AI generates an answer based on context
-
----
-
-## 🧪 Testing
-
-### ✅ Unit Tests (Vitest)
-
-Run:
-
-```bash
-npm test
-```
-
-Covers:
-
-* Retrieval logic
-* Edge cases (irrelevant queries)
-
----
-
-### 🌐 End-to-End Tests (Playwright)
-
-Run:
-
-```bash
-npx playwright test
-```
-
-Covers:
-
-* Full UI flow
-* Input → Ask → AI response
-
----
-
-## ⚙️ CI/CD Pipeline (GitHub Actions)
+npm run extract
+npm run chunk
+GitHub Actions Workflow:
+Install dependencies
+Run ETL
+Run tests
 
 Located in:
 
-```
 .github/workflows/etl.yml
-```
+🧠 How QnA Works
+User enters a question
+Relevant chunks are retrieved
+Context is sent to LLM
+AI generates final answer
+🧪 Testing Strategy
+✅ Unit Testing (TDD)
+Framework: Vitest
+Covers:
+Retrieval logic
+Edge cases
 
-### Pipeline Steps:
+Run:
 
-1. Install dependencies
-2. Run PDF extraction
-3. Run chunking
-4. Run unit tests (Vitest)
+npm test
+🌐 End-to-End Testing (Playwright MCP)
+Simulates real user behavior:
+Load app
+Enter question
+Click ask
+Verify AI response
 
-### Trigger:
+Run:
 
-* On push to `main`
-* Manual trigger (workflow_dispatch)
+npx playwright test
+🧠 Required Workflow Skills (Assignment Evidence)
+1. grill-me
+Used to refine project scope and simplify architecture
+Result: narrowed app to PDF-based QnA POC
+2. write-a-prd
 
----
+👉 [Link your PRD GitHub Issue here]
 
-## 📸 CI Status
+Includes:
 
-✔ All tests passing
-✔ ETL pipeline successful
+scope
+architecture
+supported features
+out-of-scope
+3. prd-to-issues
 
----
+👉 [Link child GitHub Issues here]
 
-## 🛠️ Installation & Setup
-
-### 1. Clone repository
-
-```bash
+Broke PRD into smaller tasks:
+ETL pipeline
+Retrieval logic
+UI integration
+Testing
+4. tdd
+Implemented retrieval logic with unit tests
+Tests validate expected behavior
+5. improve-codebase-architecture
+Refactored structure:
+separated ETL, retrieval, UI
+improved modularity
+📁 Project Structure
+ai-pdf-qna-app/
+├── app/
+├── data/
+├── lib/
+├── scripts/
+├── tests/
+├── .github/workflows/
+🛠️ Setup
 git clone https://github.com/pratik3711/ai-pdf-qna-app.git
 cd ai-pdf-qna-app
-```
-
----
-
-### 2. Install dependencies
-
-```bash
 npm install
-```
-
----
-
-### 3. Run ETL pipeline locally
-
-```bash
 npm run extract
 npm run chunk
-```
-
----
-
-### 4. Start development server
-
-```bash
 npm run dev
-```
-
-Open:
-
-```
-http://localhost:3000
-```
-
----
-
-## 📦 Scripts
-
-| Command               | Description            |
-| --------------------- | ---------------------- |
-| `npm run dev`         | Start Next.js app      |
-| `npm run extract`     | Extract text from PDFs |
-| `npm run chunk`       | Chunk extracted text   |
-| `npm test`            | Run unit tests         |
-| `npx playwright test` | Run E2E tests          |
-
----
-
-## 🔐 Environment Variables
-
-Create `.env.local` if needed:
-
-```
+🔐 Environment Variables
 OPENAI_API_KEY=your_api_key_here
-```
+📌 Technologies
+Next.js
+TypeScript
+OpenAI API
+pdf-parse
+Vitest
+Playwright
+GitHub Actions
+👨‍💻 Author
 
----
+Pratik Patel
 
-## 📌 Technologies Used
+📜 License
 
-* Next.js
-* TypeScript
-* OpenAI API
-* pdf-parse
-* Vitest
-* Playwright
-* GitHub Actions
-
----
-
-## 🎯 Future Improvements
-
-* 🔹 Add vector database (Pinecone / Supabase)
-* 🔹 Improve semantic search with embeddings
-* 🔹 Upload PDFs from UI
-* 🔹 Streaming AI responses
-* 🔹 Deploy on Vercel
-
----
-
-## 👨‍💻 Author
-
-**Pratik Patel**
-
----
-
-## 📜 License
-
-This project is for educational purposes.
+Educational use only
