@@ -1,0 +1,9 @@
+[
+  { "type": "representative", "question": "What are AWS subnets?" },
+  { "type": "representative", "question": "What are security groups?" },
+  { "type": "representative", "question": "What is the purpose of NACLs?" },
+  { "type": "representative", "question": "Which machines use Windows Server?" },
+  { "type": "representative", "question": "What is the VPC networking task?" },
+  { "type": "failure", "question": "Who won the FIFA World Cup?" },
+  { "type": "failure", "question": "Explain quantum mechanics from this PDF." }
+]
